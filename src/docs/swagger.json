@@ -1,0 +1,249 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Simple API for Clinic.",
+    "version": "1.0.0",
+    "title": "Clinic API"
+  },
+  "host": "localhost:4000",
+  "basePath": "/v1",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/user/signup": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "User registration",
+        "description": "",
+        "operationId": "signUp",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserSignUp"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/user/signin": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "User login",
+        "description": "",
+        "operationId": "signIn",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserSignIn"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login successful"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/consultation": {
+      "post": {
+        "tags": [
+          "Consultation"
+        ],
+        "summary": "Add new consultation",
+        "description": "",
+        "operationId": "addConsultation",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Consultation"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Consultation added"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Consultation"
+        ],
+        "summary": "Consultation list",
+        "description": "",
+        "operationId": "consultationList",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "from",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consultation list"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "bearer": {
+      "type": "apiKey",
+      "name": "authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "UserSignUp": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "confirm_password": {
+          "type": "string"
+        },
+        "phone_number": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "UserSignUp"
+      }
+    },
+    "UserSignIn": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "UserSignIn"
+      }
+    },
+    "Consultation": {
+      "type": "object",
+      "properties": {
+        "clinic": {
+          "type": "string"
+        },
+        "doctor_name": {
+          "type": "string"
+        },
+        "patient_name": {
+          "type": "string"
+        },
+        "diagnosis": {
+          "type": "string"
+        },
+        "medication": {
+          "type": "string"
+        },
+        "consultation_fee": {
+          "type": "integer"
+        },
+        "date": {
+          "type": "string"
+        },
+        "follow_up": {
+          "type": "boolean"
+        }
+      },
+      "xml": {
+        "name": "Consultation"
+      }
+    }
+  }
+}

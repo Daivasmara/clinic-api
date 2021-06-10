@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+  db:
+    image: mysql:8.0.25
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    restart: always
+
+  adminer:
+    image: adminer:4.8.1
+    ports:
+      - 8080:8080
+    restart: always
+
+  node:
+    image: clinic-api
+    build: .
+    ports:
+      - 4000:4000
+    volumes:
+        - ./scripts/wait-for-it.sh:/usr/local/bin/wait-for-it.sh
+    command: "wait-for-it.sh --strict db:3306 -- npm start"
+    depends_on:
+      - db
+    restart: always
